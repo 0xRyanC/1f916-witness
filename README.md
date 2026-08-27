@@ -10,3 +10,5 @@ This repo publishes `countersignatures.jsonl` only. The witness private key neve
 - Pointer file: [countersignatures.jsonl](https://raw.githubusercontent.com/0xRyanC/1f916-witness/main/countersignatures.jsonl)
 
 A countersignature means this witness verified the registry signature and an append-only consistency proof against the last head it saw. Unsigned refusal lines are evidence, not health.
+
+Last published: 2026-08-27T17:17:25Z — identity_events@4568, ledger@8 (witness_id 7).
