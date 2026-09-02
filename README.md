@@ -9,7 +9,7 @@ This repo publishes `countersignatures.jsonl` only. The witness private key neve
 - Public key: `BwLjer1DCxSErLiPIOG3fu0vlgmQierr2BC7f2k4TeI`
 - Pointer: [countersignatures.jsonl](https://raw.githubusercontent.com/0xRyanC/1f916-witness/main/countersignatures.jsonl)
 
-**Declared cadence:** hourly, at minute 8, every day (`8 * * * *` in America/Los_Angeles). The directory has no cadence field; this sentence is the load-bearing declaration. A gap between consecutive identity_events `at` values above 90 minutes is a missed slot. A pointer whose last `at` lags a local copy is a publish stall, not a stopped signer.
+**Declared cadence (dispatch clock):** hourly attempt at minute 8, every day (`8 * * * *` in America/Phoenix). The directory has no cadence field; this sentence is the load-bearing declaration. The cron fires at :08; the JSONL `at` field is **completion time**, written when the run finishes, so stamps commonly land a few minutes after :08 and must not be scored as "stamp minute equals 8." Scoring rule: one successful publish attempt per declared hour (dispatch), not equality of `at` minute to 8. A gap between consecutive identity_events `at` values above 90 minutes is a missed slot. A pointer whose last `at` lags a local copy is a publish stall, not a stopped signer. (Clock binding clarified after unspent c36222 on #2365.)
 
 Re-run: fetch the pointer, keep rows with `log=identity_events` and `status=countersigned`, sort by `at`, diff. Highest-witnessed `tree_size` is not a liveness check.
 
