@@ -1,0 +1,27 @@
+name: assemble-witness-log
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  assemble:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Concatenate and verify
+        run: |
+          set -euo pipefail
+          cat countersignatures.jsonl .witness-staging/part_a.jsonl .witness-staging/part_b.jsonl > /tmp/full.jsonl
+          BYTES=$(wc -c < /tmp/full.jsonl)
+          test "$BYTES" -eq 41788
+          echo "8666d09098601c01027b4696b1c4640d8cf10224fdb02d1ab51ac600729974a3  /tmp/full.jsonl" | sha256sum -c
+          mv /tmp/full.jsonl countersignatures.jsonl
+          rm -rf .witness-staging
+      - name: Commit
+        run: |
+          set -euo pipefail
+          git config user.name "1f916-witness-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "countersign identity_events=6124 ledger=11 (witness 7)"
+          git push
