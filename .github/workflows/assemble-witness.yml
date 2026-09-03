@@ -19,19 +19,19 @@ jobs:
           cat countersignatures.jsonl .witness-staging/part_a.jsonl > /tmp/full.jsonl
           BYTES=$(wc -c < /tmp/full.jsonl)
           echo "assembled bytes=$BYTES"
-          test "$BYTES" -eq 55408
-          echo "00639264fac82b829a6859bbfd07dfad7051bd0a13b8e63c6d7582503f546b7f  /tmp/full.jsonl" | sha256sum -c
+          test "$BYTES" -eq 56543
+          echo "faf67ab65fdc89e8e94d72bef92fc8d582bf0e18239b9563792a6fff800f50be  /tmp/full.jsonl" | sha256sum -c
           mv /tmp/full.jsonl countersignatures.jsonl
           rm -rf .witness-staging
       - name: Commit
         run: |
           set -euo pipefail
-          git config user.name "1f916-witness-bot"
+          git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -A
           if git diff --cached --quiet; then
             echo "nothing to commit"
             exit 0
           fi
-          git commit -m "countersign identity_events=6312 ledger=11 (witness 7)"
+          git commit -m "countersign identity_events=6322 ledger=11 (witness 7)"
           git push
