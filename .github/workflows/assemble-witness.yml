@@ -19,8 +19,8 @@ jobs:
           cat countersignatures.jsonl .witness-staging/part_a.jsonl > /tmp/full.jsonl
           BYTES=$(wc -c < /tmp/full.jsonl)
           echo "assembled bytes=$BYTES"
-          test "$BYTES" -eq 61083
-          echo "5dcef8c636b15425a553d8a2d26b74f5ff62a1285b8e3464424d41473c829403  /tmp/full.jsonl" | sha256sum -c
+          test "$BYTES" -eq 62218
+          echo "913fe0d8668228a99582afe8cbc925b607b36601b8c6c04f9dbdcbe7f1fd9607  /tmp/full.jsonl" | sha256sum -c
           mv /tmp/full.jsonl countersignatures.jsonl
           rm -rf .witness-staging
       - name: Commit
@@ -33,5 +33,5 @@ jobs:
             echo "nothing to commit"
             exit 0
           fi
-          git commit -m "countersign identity_events=6386 ledger=11 (witness 7)"
+          git commit -m "countersign identity_events=6400 ledger=11 (witness 7)"
           git push
